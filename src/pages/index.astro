@@ -28,10 +28,10 @@ const stats = [
     <div class="pointer-events-none absolute inset-0 [background-image:linear-gradient(var(--color-line)_1px,transparent_1px),linear-gradient(90deg,var(--color-line)_1px,transparent_1px)] [background-size:64px_64px] opacity-40 [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_70%)]"></div>
     <div class="pointer-events-none absolute left-1/2 top-[-12rem] h-[28rem] w-[48rem] -translate-x-1/2 rounded-full bg-accent/15 blur-3xl"></div>
     <div class="container-x relative pb-20 pt-20 sm:pb-28 sm:pt-28">
-      <p class="reveal inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 px-3 py-1 text-xs text-muted">
-        <span class="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_var(--color-accent)]"></span>
-        {site.name} · Vancouver
-      </p>
+      <a href="/about" class="reveal inline-flex items-center gap-2.5 rounded-full border border-line bg-surface/70 py-1 pl-1 pr-3.5 text-sm text-muted transition-colors hover:border-muted">
+        <img src={site.photo} alt="" width="28" height="28" class="h-7 w-7 rounded-full object-cover" />
+        <span><span class="text-ink">{site.name}</span> · Vancouver</span>
+      </a>
       <h1 class="reveal mt-7 max-w-4xl text-4xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-6xl">
         I help finance-software companies sell through <span class="text-accent">partners</span>, connect to <span class="text-accent">ERPs</span> and put <span class="text-accent">AI agents</span> into daily use.
       </h1>

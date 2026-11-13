@@ -10,7 +10,7 @@ export const site = {
   location: 'Vancouver · Pacific time · Working across North America and EMEA',
   email: 'hello@example.com', // TODO: your public email address
   linkedin: 'https://www.linkedin.com/in/alexanderstrelkov/',
-  photo: '', // TODO: e.g. '/alex.jpg' (put the file in /public)
+  photo: '/alex.jpg',
 };
 
 export const mailto = (subject = 'Intro call') =>
