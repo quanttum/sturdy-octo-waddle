@@ -1,0 +1,19 @@
+---
+const steps = [
+  ['Intro call', '30 minutes', 'What you want to launch or fix, your constraints, and whether I am the right fit.'],
+  ['Diagnostic', '1–2 weeks', 'Interviews with sales, product, partners and customers, a review of your data and integrations, and written findings.'],
+  ['Plan', 'Before work starts', 'Scope, milestones, owners and success metrics agreed in writing.'],
+  ['Build with your team', 'Weekly check-ins', 'I work in your Slack and tools, with a weekly check-in and a running decision log.'],
+  ['Handover', 'You own it', 'Playbooks, specs and dashboards your team owns, with optional advisory afterwards.'],
+];
+---
+<ol class="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-5">
+  {steps.map(([t, when, d], i) => (
+    <li class="reveal flex flex-col bg-bg p-6">
+      <span class="font-mono text-xs text-accent">0{i + 1}</span>
+      <h3 class="mt-4 font-semibold">{t}</h3>
+      <p class="mt-1 text-xs text-subtle">{when}</p>
+      <p class="mt-3 text-sm leading-relaxed text-muted">{d}</p>
+    </li>
+  ))}
+</ol>

@@ -12,9 +12,11 @@ const ogImage = new URL('/og.png', Astro.site);
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
-    { '@type': 'Person', name: site.name, jobTitle: site.role, email: site.email, sameAs: [site.linkedin], url: Astro.site?.toString() },
+    { '@type': 'Person', name: site.name, jobTitle: site.role, email: site.email, sameAs: [site.linkedin], url: Astro.site?.toString(),
+      address: { '@type': 'PostalAddress', addressLocality: 'Vancouver', addressRegion: 'BC', addressCountry: 'CA' },
+      alumniOf: 'Lomonosov Moscow State University' },
     { '@type': 'ProfessionalService', name: site.name, description: site.tagline, url: Astro.site?.toString(),
-      serviceType: ['Fintech consulting', 'Payments', 'Systems implementation'] },
+      serviceType: ['Partner program design', 'ERP and embedded integrations', 'Enterprise implementation', 'AI agents for finance teams'], areaServed: ['North America', 'EMEA'] },
   ],
 };
 ---

@@ -1,0 +1,12 @@
+[
+  { "id": "integration-readiness-review", "order": 1, "name": "Integration Readiness Review", "duration": "2 weeks", "service": "fintech",
+    "description": "Review of your current ERP and embedded integrations, a gap list, a prioritized roadmap and a partner validation plan." },
+  { "id": "deal-desk-sprint", "order": 2, "name": "Deal Desk Sprint", "duration": "4 weeks", "service": "implementation",
+    "description": "Discovery and solution design on up to 3 enterprise deals, plus a reusable RFP and security-questionnaire library." },
+  { "id": "ai-agent-pilot", "order": 3, "name": "AI Agent Pilot", "duration": "6 weeks", "service": "implementation",
+    "description": "One agent taken from scope to production for a finance or sales team, a usage dashboard and a handover session." },
+  { "id": "partner-program-launch", "order": 4, "name": "Partner Program Launch", "duration": "8 weeks", "service": "consulting",
+    "description": "Program design (tiers, benefits, partner economics), a certification curriculum, a co-sell playbook and the first 2 partners onboarded." },
+  { "id": "ongoing-advisory", "order": 5, "name": "Ongoing advisory", "duration": "Monthly", "service": "consulting",
+    "description": "A call every two weeks, async review of plans and specs, and help on partner and deal escalations." }
+]

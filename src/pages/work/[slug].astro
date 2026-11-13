@@ -15,12 +15,12 @@ const serviceName = { consulting: 'Consulting', fintech: 'Fintech', implementati
 <Base title={d.title} description={d.summary}>
   <section class="container-x pt-16 pb-10 sm:pt-24">
     <a href="/work" class="text-sm text-muted hover:text-ink">← All work</a>
-    <p class="mt-10 text-sm text-subtle"><span class="text-accent">{d.sector}</span> · {d.client} · {d.year}</p>
+    <p class="mt-10 text-sm text-subtle"><span class="text-accent">{d.sector}</span> · {d.client}{d.year && ` · ${d.year}`}</p>
     <h1 class="h-display mt-4 max-w-4xl !text-4xl sm:!text-6xl">{d.title}</h1>
     <p class="lead mt-6 max-w-3xl">{d.summary}</p>
   </section>
   <section class="container-x">
-    <dl class="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-3">
+    <dl class="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-[repeat(auto-fit,minmax(0,1fr))]">
       {d.metrics.map((m) => (
         <div class="bg-surface p-7">
           <dd class="text-4xl font-semibold tracking-tight text-accent">{m.value}</dd>
@@ -36,7 +36,8 @@ const serviceName = { consulting: 'Consulting', fintech: 'Fintech', implementati
         <p class="text-subtle">Service</p>
         <a href={`/services/${d.service}`} class="mt-1 block font-medium text-accent hover:underline">{serviceName}</a>
         <p class="mt-4 text-subtle">Sector</p><p class="mt-1 font-medium">{d.sector}</p>
-        <p class="mt-4 text-subtle">Year</p><p class="mt-1 font-medium">{d.year}</p>
+        {d.year && <><p class="mt-4 text-subtle">Year</p><p class="mt-1 font-medium">{d.year}</p></>}
+        <p class="mt-4 text-subtle">Client</p><p class="mt-1 font-medium">{d.client}</p>
       </div>
     </aside>
   </div>

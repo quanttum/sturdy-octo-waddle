@@ -4,54 +4,52 @@ import Base from '../layouts/Base.astro';
 import Section from '../components/Section.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import CaseStudyCard from '../components/CaseStudyCard.astro';
+import Packages from '../components/Packages.astro';
+import HowIWork from '../components/HowIWork.astro';
 import Testimonials from '../components/Testimonials.astro';
 import CTA from '../components/CTA.astro';
 import Arrow from '../components/Arrow.astro';
-import { site } from '../site.config';
+import { site, mailto } from '../site.config';
 
 const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
 const featured = (await getCollection('caseStudies', (c) => c.data.featured)).sort((a, b) => a.data.order - b.data.order);
+const hasTestimonials = (await getCollection('testimonials')).length > 0;
 
-// TODO: replace with your real numbers
+const proof = ['15 years in fintech and B2B SaaS', 'Banks, credit unions and payment companies', 'North America and EMEA', 'Partner programs live in six months', 'AI agents in production'];
 const stats = [
-  { value: '12+', label: 'years in financial services' },
-  { value: '40+', label: 'projects delivered' },
-  { value: '€2bn+', label: 'annual volume on systems I launched' },
-  { value: '9', label: 'markets' },
+  { value: '15', label: 'years in fintech and B2B SaaS' },
+  { value: '9 mo', label: 'to take a bank lending platform live' },
+  { value: '4,000+', label: 'dealers on a lending platform I delivered' },
+  { value: '600+', label: 'people using an AI agent I shipped, daily' },
 ];
-const clients = ['Bank One', 'PayCo', 'Lendly', 'Treasury+', 'Fintrix']; // TODO: real client names or remove
 ---
 <Base>
-  <!-- Hero -->
   <section class="relative overflow-hidden">
     <div class="pointer-events-none absolute inset-0 [background-image:linear-gradient(var(--color-line)_1px,transparent_1px),linear-gradient(90deg,var(--color-line)_1px,transparent_1px)] [background-size:64px_64px] opacity-40 [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_70%)]"></div>
     <div class="pointer-events-none absolute left-1/2 top-[-12rem] h-[28rem] w-[48rem] -translate-x-1/2 rounded-full bg-accent/15 blur-3xl"></div>
-    <div class="container-x relative pb-20 pt-20 sm:pb-28 sm:pt-32">
+    <div class="container-x relative pb-20 pt-20 sm:pb-28 sm:pt-28">
       <p class="reveal inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 px-3 py-1 text-xs text-muted">
         <span class="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_var(--color-accent)]"></span>
-        Available for new engagements
+        {site.name} · Vancouver
       </p>
-      <h1 class="reveal h-display mt-7 max-w-4xl">
-        Fintech strategy, <span class="text-accent">delivered</span> — not just advised.
+      <h1 class="reveal mt-7 max-w-4xl text-4xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-6xl">
+        I help finance-software companies sell through <span class="text-accent">partners</span>, connect to <span class="text-accent">ERPs</span> and put <span class="text-accent">AI agents</span> into daily use.
       </h1>
       <p class="reveal lead mt-6 max-w-2xl">{site.tagline}</p>
       <div class="reveal mt-10 flex flex-wrap gap-3">
-        <a href={site.bookingUrl} class="btn-primary group">Book a call <Arrow /></a>
-        <a href="/work" class="btn-ghost">See my work</a>
+        <a href={mailto()} class="btn-primary group">Book a 30-minute call <Arrow /></a>
+        <a href="#packages" class="btn-ghost">See the packages</a>
       </div>
     </div>
   </section>
 
-  <!-- Clients strip -->
   <div class="border-y border-line/70">
-    <div class="container-x flex flex-wrap items-center gap-x-10 gap-y-3 py-6 text-sm text-subtle">
-      <span class="text-xs uppercase tracking-[0.18em]">Trusted by</span>
-      {clients.map((c) => <span class="font-medium text-muted/80">{c}</span>)}
-    </div>
+    <ul class="container-x flex flex-wrap items-center gap-x-8 gap-y-3 py-6 text-sm text-muted">
+      {proof.map((p) => <li class="flex items-center gap-2.5"><span class="h-1 w-1 rounded-full bg-accent"></span>{p}</li>)}
+    </ul>
   </div>
 
-  <!-- Services -->
-  <Section eyebrow="Services" title="Three ways I help" intro="Pick one, or combine them. Most clients start with a short consulting engagement and keep me on for delivery.">
+  <Section eyebrow="Services" title="Three ways I help" intro="Each tied to work I have run inside finance-software and payments companies.">
     <div class="grid gap-5 md:grid-cols-3">
       {services.map((s, i) => (
         <ServiceCard index={i + 1} title={s.data.title} summary={s.data.summary} href={`/services/${s.id}`} points={s.data.deliverables} />
@@ -59,11 +57,10 @@ const clients = ['Bank One', 'PayCo', 'Lendly', 'Treasury+', 'Fintrix']; // TODO
     </div>
   </Section>
 
-  <!-- Stats -->
   <section class="border-y border-line/70 bg-surface/40">
     <dl class="container-x grid grid-cols-2 gap-y-10 py-16 lg:grid-cols-4">
       {stats.map((s) => (
-        <div class="reveal border-l border-line pl-5">
+        <div class="reveal border-l border-line pl-5 pr-3">
           <dd class="text-4xl font-semibold tracking-tight sm:text-5xl">{s.value}</dd>
           <dt class="mt-2 text-sm text-muted">{s.label}</dt>
         </div>
@@ -71,20 +68,22 @@ const clients = ['Bank One', 'PayCo', 'Lendly', 'Treasury+', 'Fintrix']; // TODO
     </dl>
   </section>
 
-  <!-- Work -->
-  <Section eyebrow="Selected work" title="Outcomes, not activity">
-    <div class="space-y-5">
-      {featured.map((c) => (
-        <CaseStudyCard href={`/work/${c.id}`} {...c.data} />
-      ))}
-    </div>
-    <a href="/work" class="group mt-10 inline-flex items-center gap-1.5 text-sm font-medium text-accent">All case studies <Arrow /></a>
+  <Section id="packages" eyebrow="Packages" title="Fixed scope, fixed timeline" intro="Each package has a set scope, timeline and price, so you can decide without a long proposal.">
+    <Packages />
   </Section>
 
-  <!-- Testimonials -->
-  <Section eyebrow="Clients" title="What people say" class="!pt-0">
-    <Testimonials />
+  <Section eyebrow="Selected work" title="Outcomes, not activity" class="!pt-0">
+    <div class="space-y-5">
+      {featured.map((c) => <CaseStudyCard href={`/work/${c.id}`} {...c.data} />)}
+    </div>
+    <a href="/work" class="group mt-10 inline-flex items-center gap-1.5 text-sm font-medium text-accent">All work and platforms delivered <Arrow /></a>
   </Section>
+
+  <Section eyebrow="Process" title="How I work" class="!pt-0">
+    <HowIWork />
+  </Section>
+
+  {hasTestimonials && <Section eyebrow="Clients" title="What people say" class="!pt-0"><Testimonials /></Section>}
 
   <CTA />
 </Base>

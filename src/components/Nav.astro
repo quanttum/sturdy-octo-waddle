@@ -1,12 +1,12 @@
 ---
-import { site, nav } from '../site.config';
+import { site, nav, mailto } from '../site.config';
 const path = Astro.url.pathname;
 const isActive = (href: string) => path === href || path.startsWith(href + '/');
 ---
 <header class="sticky top-0 z-40 border-b border-line/60 bg-bg/75 backdrop-blur-xl">
   <div class="container-x flex h-16 items-center justify-between">
     <a href="/" class="flex items-center gap-2.5 font-semibold tracking-tight">
-      <span class="grid h-7 w-7 place-items-center rounded-md bg-accent text-[13px] font-bold text-bg">{site.name.split(' ').map((w) => w[0]).join('').slice(0, 2)}</span>
+      <span class="grid h-7 w-7 place-items-center rounded-md bg-accent text-[13px] font-bold text-bg">{site.initials}</span>
       <span>{site.name}</span>
     </a>
     <nav aria-label="Main" class="hidden items-center gap-8 md:flex">
@@ -14,7 +14,7 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
         <a href={l.href} class:list={['text-sm transition-colors hover:text-ink', isActive(l.href) ? 'text-ink' : 'text-muted']}
            aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a>
       ))}
-      <a href={site.bookingUrl} class="btn-primary !py-2">Book a call</a>
+      <a href={mailto()} class="btn-primary !py-2">Get in touch</a>
     </nav>
     <details class="group md:hidden">
       <summary class="list-none cursor-pointer rounded-md p-2 text-muted hover:text-ink [&::-webkit-details-marker]:hidden" aria-label="Menu">
@@ -23,7 +23,7 @@ const isActive = (href: string) => path === href || path.startsWith(href + '/');
       </summary>
       <div class="absolute inset-x-0 top-16 border-b border-line bg-bg px-5 pb-6 pt-2">
         {nav.map((l) => <a href={l.href} class="block border-b border-line/60 py-3.5 text-ink">{l.label}</a>)}
-        <a href={site.bookingUrl} class="btn-primary mt-5 w-full justify-center">Book a call</a>
+        <a href={mailto()} class="btn-primary mt-5 w-full justify-center">Get in touch</a>
       </div>
     </details>
   </div>

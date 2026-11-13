@@ -4,7 +4,8 @@ import Base from '../../layouts/Base.astro';
 import CaseStudyCard from '../../components/CaseStudyCard.astro';
 import CTA from '../../components/CTA.astro';
 import Arrow from '../../components/Arrow.astro';
-import { site } from '../../site.config';
+import { mailto } from '../../site.config';
+import Packages from '../../components/Packages.astro';
 
 export async function getStaticPaths() {
   const services = await getCollection('services');
@@ -22,7 +23,7 @@ const others = (await getCollection('services')).filter((s) => s.id !== service.
     <p class="eyebrow mt-10">Service</p>
     <h1 class="h-display mt-3">{d.title}</h1>
     <p class="lead mt-6 max-w-3xl">{d.summary}</p>
-    <a href={site.bookingUrl} class="btn-primary group mt-9">Discuss your project <Arrow /></a>
+    <a href={mailto(`${d.title} enquiry`)} class="btn-primary group mt-9">Discuss your project <Arrow /></a>
   </section>
 
   <section class="container-x grid gap-5 pb-8 md:grid-cols-3">
@@ -45,6 +46,11 @@ const others = (await getCollection('services')).filter((s) => s.id !== service.
   </section>
 
   <div class="container-x py-12"><article class="prose-site max-w-3xl [&>h2:first-child]:mt-0"><Content /></article></div>
+
+  <section class="container-x py-12">
+    <h2 class="h-section mb-8">Packages</h2>
+    <Packages service={service.id} />
+  </section>
 
   {related.length > 0 && (
     <section class="container-x py-12">

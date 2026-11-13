@@ -1,8 +1,8 @@
 ---
-import { site } from '../site.config';
+import { site, mailto } from '../site.config';
 import Arrow from './Arrow.astro';
 interface Props { title?: string; text?: string }
-const { title = 'Have a project in mind?', text = 'A 30-minute call is usually enough to tell whether I can help — and if not, who can.' } = Astro.props;
+const { title = 'Have something to launch or fix?', text = 'Tell me what you are trying to launch or fix, and by when. I reply within two business days.' } = Astro.props;
 ---
 <section class="container-x pb-24 sm:pb-32">
   <div class="reveal relative overflow-hidden rounded-3xl border border-line bg-surface px-7 py-14 sm:px-14 sm:py-20">
@@ -11,9 +11,10 @@ const { title = 'Have a project in mind?', text = 'A 30-minute call is usually e
       <h2 class="h-section">{title}</h2>
       <p class="lead mt-4">{text}</p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <a href={site.bookingUrl} class="btn-primary group">Book a call <Arrow /></a>
+        <a href={mailto()} class="btn-primary group">Book a 30-minute call <Arrow /></a>
         <a href={`mailto:${site.email}`} class="btn-ghost">{site.email}</a>
       </div>
+      <p class="mt-6 text-sm text-subtle">Helpful to include: your name, company, what you're working on, and your timeline.</p>
     </div>
   </div>
 </section>

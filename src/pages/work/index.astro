@@ -3,14 +3,14 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Section from '../../components/Section.astro';
 import CaseStudyCard from '../../components/CaseStudyCard.astro';
-import Testimonials from '../../components/Testimonials.astro';
+import Platforms from '../../components/Platforms.astro';
 import CTA from '../../components/CTA.astro';
 const cases = (await getCollection('caseStudies')).sort((a, b) => a.data.order - b.data.order);
 ---
 <Base title="Work" description="Selected case studies in fintech consulting and implementation.">
-  <Section eyebrow="Work" title="Selected case studies" intro="Client names are withheld where confidentiality requires. Numbers are real.">
+  <Section eyebrow="Work" title="Selected case studies" intro="Results from partner, integration, implementation and AI work. Client names are withheld where confidentiality requires.">
     <div class="space-y-5">{cases.map((c) => <CaseStudyCard href={`/work/${c.id}`} {...c.data} />)}</div>
   </Section>
-  <Section eyebrow="Clients" title="In their words" class="!pt-0"><Testimonials /></Section>
+  <Section eyebrow="Platforms delivered" title="Lending and financing platforms" intro="End-to-end financing platforms I delivered at Inovatec for banks, OEMs, marketplaces and lenders." class="!pt-0"><Platforms /></Section>
   <CTA />
 </Base>

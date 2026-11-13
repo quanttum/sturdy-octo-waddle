@@ -1,23 +1,26 @@
 ---
 title: Fintech
 order: 2
-summary: Payments, lending, banking-as-a-service and treasury. I bring hands-on product and regulatory depth to the parts of finance that are hard to get right.
-forWho: Fintechs scaling past product-market fit, and banks or corporates modernising how they move and manage money.
+summary: Embedded payments, lending platforms and ERP connectors. Hands-on product depth in the parts of finance software that are hard to get right.
+forWho: Payments, lending and finance-software platforms adding ERP connectors, embedding payments and payables in partner products, or launching financing programs with lenders.
 deliverables:
-  - Payment flow and ledger design
-  - Partner bank, PSP and BaaS provider evaluation
-  - Compliance-by-design (KYC/AML, PSD2, PCI DSS) input to product
-  - Reconciliation and reporting architecture
+  - ERP prioritization and data-flow mapping (NetSuite, Sage Intacct, SAP Business One, Business Central, SAP)
+  - Embedded payments and payables design for partner products
+  - Lending platforms — LOS/LMS, dealer and customer portals, multi-lender marketplaces
+  - AI agents for finance and go-to-market teams, built on Claude or Snowflake
 outcomes:
-  - Products that pass due diligence the first time
-  - Lower processing costs and fewer failed payments
-  - Clean money movement your finance team can trust
+  - Integrations that ship and generate revenue
+  - Lender and partner APIs connected cleanly
+  - Finance and sales teams using an agent every day
 ---
 
-## Where I help most
+## Where I've done it
 
-- **Payments:** card, A2A, cross-border, payouts, and the operations behind them.
-- **Infrastructure:** ledgers, reconciliation, treasury and liquidity tooling.
-- **Partnerships:** choosing and integrating banks, processors and data providers.
+- **ERP integrations.** At Tipalti I led the SAP integration end to end with engineering — $2M in revenue in the first quarter after release.
+- **Embedded lending.** At Inovatec I built an embedded lending marketplace that integrated 8 lenders through APIs; platform traffic grew 40% in six months.
+- **Financing programs.** Dealer and customer finance portals for OEMs, marketplaces, credit unions and equipment auctions — up to 4,000+ dealers and 40+ lenders on a single platform.
+- **AI agents.** An agent on Snowflake now in daily use by 600+ employees, running multi-step analysis across Salesforce, Clari and Snowflake.
 
-<!-- TODO: tailor to your actual fintech specialisms -->
+## Package
+
+The **Integration Readiness Review** is a two-week, fixed-scope look at your current ERP and embedded integrations.

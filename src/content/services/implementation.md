@@ -1,21 +1,26 @@
 ---
 title: Implementation
 order: 3
-summary: From signed contract to live in production. I lead delivery of financial systems so go-live is a non-event.
-forWho: Teams rolling out a new platform, migrating off legacy systems, or rescuing a programme that has drifted.
+summary: Enterprise pre-sales through go-live. I design the solution, answer the RFP, run the plan and take it to production.
+forWho: Teams selling to banks, credit unions and enterprise finance departments, and teams ready to take an AI agent from idea to daily use.
 deliverables:
-  - Delivery plan, governance and RAID management
-  - Requirements, integration design and data migration
-  - Test strategy, UAT and cutover runbooks
-  - Hypercare and handover to BAU
+  - Technical discovery and solution design
+  - RFP and security-questionnaire answers, with a reusable library
+  - Implementation plans, steering meetings and delivery to go-live
+  - AI agent rollout — use case, data connections, build, adoption measurement
 outcomes:
-  - Go-live on the agreed date and budget
-  - Clean data on day one
-  - A team that can run the system without me
+  - Complex deals closed
+  - Implementations live on schedule
+  - An agent in daily use, with adoption measured
 ---
 
 ## Delivery, not decks
 
-I sit with your team and vendors, own the plan, and remove blockers daily. Status is honest, risks are raised early, and decisions are documented.
+At Inovatec I led the pre-sales and implementation team that delivered an enterprise lending platform for a major Canadian bank from scratch — live in nine months, 2.5× faster than comparable projects. The client reached 70% market share and the account doubled the vendor's revenue from it.
 
-<!-- TODO: add your delivery methodology, certifications (PMP, PRINCE2, etc.) and tools -->
+I sit with your team, your partners and your customers, own the plan, and keep a running decision log so nothing gets lost.
+
+## Packages
+
+- **Deal Desk Sprint** — discovery and solution design on up to three enterprise deals.
+- **AI Agent Pilot** — one agent from scope to production in six weeks.

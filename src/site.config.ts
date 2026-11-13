@@ -1,15 +1,20 @@
-// Single source of truth for your identity and contact details.
-// Replace every TODO value — everything else on the site reads from here.
+// Single source of truth for identity and contact details.
 export const site = {
-  name: 'Your Name', // TODO
-  role: 'Fintech Consultant & Implementation Lead', // TODO
-  tagline: 'I help financial businesses ship the systems that move money — cleanly, compliantly, and on time.', // TODO
-  location: 'City, Country · Working globally', // TODO
-  email: 'hello@example.com', // TODO
-  bookingUrl: 'https://cal.com/your-handle/intro', // TODO: Calendly / Cal.com link
-  linkedin: 'https://www.linkedin.com/in/your-handle', // TODO
-  photo: '', // TODO: e.g. '/me.jpg' (put the file in /public)
+  name: 'Alexander Strelkov',
+  initials: 'AS',
+  role: 'Fintech advisor · Partners, integrations & AI agents',
+  headline: 'I help finance-software companies sell through partners, connect to ERPs and put AI agents into daily use.',
+  tagline:
+    '15 years building partner channels, ERP and embedded integrations, and enterprise implementations for payments and finance-software companies in North America and EMEA.',
+  pitch: 'Partner programs, integrations and AI agents for finance-software companies.',
+  location: 'Vancouver · Pacific time · Working across North America and EMEA',
+  email: 'hello@example.com', // TODO: your public email address
+  linkedin: 'https://www.linkedin.com/in/alexanderstrelkov/',
+  photo: '', // TODO: e.g. '/alex.jpg' (put the file in /public)
 };
+
+export const mailto = (subject = 'Intro call') =>
+  `mailto:${site.email}?subject=${encodeURIComponent(subject)}`;
 
 export const nav = [
   { href: '/services', label: 'Services' },

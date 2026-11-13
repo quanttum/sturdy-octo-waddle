@@ -14,13 +14,15 @@ npm run build    # outputs to dist/
 
 | What | File |
 | --- | --- |
-| Name, role, tagline, email, booking link, LinkedIn, photo | `src/site.config.ts` |
+| Name, headline, tagline, email, LinkedIn, photo | `src/site.config.ts` |
 | Services (3) | `src/content/services/*.md` |
+| Packages (scope, duration, price) | `src/content/packages.json` |
+| Platforms delivered | `src/content/platforms.json` |
 | Case studies | `src/content/case-studies/*.md` (add a file → new page) |
-| Testimonials | `src/content/testimonials.json` |
+| Testimonials (section hidden while empty) | `src/content/testimonials.json` |
 | Career timeline | `src/content/timeline.json` |
-| Home hero, stats, client names | `src/pages/index.astro` |
-| About bio, credentials, principles | `src/pages/about.astro` |
+| Home proof strip and stats | `src/pages/index.astro` |
+| About bio, education, FAQ | `src/pages/about.astro` |
 | Colors & type | `src/styles/global.css` (`@theme` block) |
 | Domain (sitemap/canonical) | `astro.config.mjs` → `site`, and `public/robots.txt` |
 | Social preview / favicon | `public/og.png`, `public/favicon.svg` |

@@ -1,25 +1,25 @@
 ---
 title: Consulting
 order: 1
-summary: Strategy you can actually execute. I map where you are, where you need to be, and the shortest credible path between them.
-forWho: Leadership teams facing a build-vs-buy decision, a market entry, a regulatory deadline, or a stalled transformation.
+summary: Partner channel and integration strategy for finance-software and fintech companies. I design the program or the roadmap, then help you launch it.
+forWho: Finance-software and fintech companies launching or fixing a systems-integrator, accounting-firm or reseller channel, or deciding which ERPs and partners to integrate with next.
 deliverables:
-  - Current-state assessment of processes, systems and vendors
-  - Target operating model and architecture
-  - Prioritised roadmap with costs, risks and owners
-  - Vendor selection and RFP support
+  - Partner program design — tiers, benefits and partner economics
+  - Certification tracks for partner sales, technical consulting and implementation
+  - Co-sell motion and playbook, with the first partners recruited and onboarded
+  - ERP and embedded integration roadmap with partner validation and betas
 outcomes:
-  - A decision made, with the reasoning written down
-  - A plan your team believes in and can run
-  - Fewer surprises from regulators, auditors and vendors
+  - Certified partners selling and implementing your product
+  - An integration roadmap your engineers can build from
+  - A playbook your team runs without me
 ---
 
-## How I work
+## What this looks like in practice
 
-**Discover (1–2 weeks).** Stakeholder interviews, system walkthroughs, data review. I look at what actually happens, not just what the process doc says.
+At Tipalti I built the systems-integrator certification program — tracks for partner sales, technical consulting, implementation and co-sell. Two top-25 US accounting and advisory firms were certified and live within six months.
 
-**Decide (1–2 weeks).** Options laid out with trade-offs in plain language. We pick one together.
+I bring the same approach to your channel: decide who your partners are and what they earn, give them a certification path that produces people who can actually sell and implement, and run the first co-sell deals alongside them.
 
-**Plan (1 week).** A roadmap sized to your team's real capacity, with clear milestones and success measures.
+## Packages
 
-<!-- TODO: replace with your own approach, engagement formats and typical timelines -->
+Start with a fixed-scope **Partner Program Launch**, or keep me on as an **ongoing advisor** for plans, specs and partner escalations.
