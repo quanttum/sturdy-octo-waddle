@@ -9,7 +9,7 @@ import HowIWork from '../components/HowIWork.astro';
 import Testimonials from '../components/Testimonials.astro';
 import CTA from '../components/CTA.astro';
 import Arrow from '../components/Arrow.astro';
-import { site, mailto } from '../site.config';
+import { site } from '../site.config';
 
 const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
 const featured = (await getCollection('caseStudies', (c) => c.data.featured)).sort((a, b) => a.data.order - b.data.order);
@@ -37,7 +37,7 @@ const stats = [
       </h1>
       <p class="reveal lead mt-6 max-w-2xl">{site.tagline}</p>
       <div class="reveal mt-10 flex flex-wrap gap-3">
-        <a href={mailto()} class="btn-primary group">Book a 30-minute call <Arrow /></a>
+        <a href={site.bookingPath} class="btn-primary group">Book a 30-minute call <Arrow /></a>
         <a href="#packages" class="btn-ghost">See the packages</a>
       </div>
     </div>

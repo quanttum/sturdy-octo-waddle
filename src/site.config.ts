@@ -11,6 +11,7 @@ export const site = {
   email: 'hello@example.com', // TODO: your public email address
   linkedin: 'https://www.linkedin.com/in/alexanderstrelkov/',
   photo: '/alex.jpg',
+  bookingPath: '/book',
 };
 
 export const mailto = (subject = 'Intro call') =>

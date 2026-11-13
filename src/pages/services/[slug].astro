@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 import CaseStudyCard from '../../components/CaseStudyCard.astro';
 import CTA from '../../components/CTA.astro';
 import Arrow from '../../components/Arrow.astro';
-import { mailto } from '../../site.config';
+import { site } from '../../site.config';
 import Packages from '../../components/Packages.astro';
 
 export async function getStaticPaths() {
@@ -23,7 +23,7 @@ const others = (await getCollection('services')).filter((s) => s.id !== service.
     <p class="eyebrow mt-10">Service</p>
     <h1 class="h-display mt-3">{d.title}</h1>
     <p class="lead mt-6 max-w-3xl">{d.summary}</p>
-    <a href={mailto(`${d.title} enquiry`)} class="btn-primary group mt-9">Discuss your project <Arrow /></a>
+    <a href={site.bookingPath} class="btn-primary group mt-9">Book a call about this <Arrow /></a>
   </section>
 
   <section class="container-x grid gap-5 pb-8 md:grid-cols-3">
