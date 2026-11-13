@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+import CaseStudyCard from '../../components/CaseStudyCard.astro';
+import Testimonials from '../../components/Testimonials.astro';
+import CTA from '../../components/CTA.astro';
+const cases = (await getCollection('caseStudies')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Work" description="Selected case studies in fintech consulting and implementation.">
+  <Section eyebrow="Work" title="Selected case studies" intro="Client names are withheld where confidentiality requires. Numbers are real.">
+    <div class="space-y-5">{cases.map((c) => <CaseStudyCard href={`/work/${c.id}`} {...c.data} />)}</div>
+  </Section>
+  <Section eyebrow="Clients" title="In their words" class="!pt-0"><Testimonials /></Section>
+  <CTA />
+</Base>

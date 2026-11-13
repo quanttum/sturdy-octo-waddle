@@ -1,0 +1,5 @@
+[
+  { "id": "t1", "quote": "TODO: A short, specific quote from a client about the result you delivered.", "name": "Client Name", "title": "CFO, Company" },
+  { "id": "t2", "quote": "TODO: A quote about how you work: calm, clear, and on top of the detail.", "name": "Client Name", "title": "Head of Payments, Company" },
+  { "id": "t3", "quote": "TODO: A quote about trust, delivery or impact.", "name": "Client Name", "title": "COO, Company" }
+]

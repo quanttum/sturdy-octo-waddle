@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import CTA from '../components/CTA.astro';
+import { site } from '../site.config';
+const timeline = (await getCollection('timeline')).sort((a, b) => a.data.order - b.data.order);
+// TODO: real credentials
+const credentials = ['TODO: Degree, University', 'TODO: Certification (e.g. PMP, CFA, ICA)', 'TODO: Languages'];
+const principles = [
+  ['Straight talk', 'If something is off track, you hear it from me first — with a fix.'],
+  ['Small, senior, direct', 'No hand-offs to juniors. The person you hire is the person doing the work.'],
+  ['Leave you stronger', 'Documentation and knowledge transfer are part of the job, not an extra.'],
+];
+---
+<Base title="About" description={`About ${site.name}, ${site.role}.`}>
+  <section class="container-x grid gap-12 pt-16 pb-12 sm:pt-24 lg:grid-cols-[1.3fr_1fr] lg:items-end">
+    <div>
+      <p class="eyebrow">About</p>
+      <h1 class="h-display mt-3">Hi, I'm {site.name.split(' ')[0]}.</h1>
+      <div class="lead mt-6 space-y-5">
+        <p>TODO: Two or three sentences on who you are and the problems you've spent your career solving. Lead with outcomes.</p>
+        <p>TODO: What makes you different — the combination of skills, sectors or perspective clients get from you that they don't get elsewhere.</p>
+      </div>
+      <p class="mt-6 text-sm text-subtle">{site.location}</p>
+    </div>
+    <div class="reveal relative aspect-[4/5] overflow-hidden rounded-3xl border border-line bg-surface">
+      {site.photo
+        ? <img src={site.photo} alt={`Portrait of ${site.name}`} class="h-full w-full object-cover" />
+        : <div class="grid h-full place-items-center text-sm text-subtle">TODO: add your photo (site.config.ts → photo)</div>}
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg/40 to-transparent"></div>
+    </div>
+  </section>
+
+  <Section eyebrow="Experience" title="Career">
+    <ol class="relative border-l border-line">
+      {timeline.map(({ data }) => (
+        <li class="reveal relative pb-10 pl-8 last:pb-0">
+          <span class="absolute -left-[5px] top-2 h-2.5 w-2.5 rounded-full border-2 border-bg bg-accent"></span>
+          <p class="text-sm text-subtle">{data.period}</p>
+          <h3 class="mt-1 text-lg font-semibold">{data.role} <span class="font-normal text-muted">· {data.org}</span></h3>
+          <p class="mt-2 max-w-2xl text-muted leading-relaxed">{data.note}</p>
+        </li>
+      ))}
+    </ol>
+  </Section>
+
+  <Section eyebrow="Principles" title="How I work" class="!pt-0">
+    <div class="grid gap-5 md:grid-cols-3">
+      {principles.map(([t, d]) => (
+        <div class="reveal card p-7"><h3 class="text-lg font-semibold">{t}</h3><p class="mt-2 text-muted leading-relaxed">{d}</p></div>
+      ))}
+    </div>
+  </Section>
+
+  <Section eyebrow="Credentials" title="Background" class="!pt-0">
+    <ul class="grid gap-3 sm:grid-cols-3">
+      {credentials.map((c) => <li class="reveal card p-5 text-ink/90">{c}</li>)}
+    </ul>
+  </Section>
+  <CTA title="Let's talk" />
+</Base>

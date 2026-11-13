@@ -1,0 +1,5 @@
+[
+  { "id": "1", "order": 1, "period": "2021 — Now", "role": "Independent Consultant", "org": "Your Name Advisory", "note": "TODO: Fintech consulting and implementation for banks, fintechs and corporates." },
+  { "id": "2", "order": 2, "period": "2017 — 2021", "role": "TODO Role", "org": "TODO Company", "note": "TODO: One line on scope and impact." },
+  { "id": "3", "order": 3, "period": "2013 — 2017", "role": "TODO Role", "org": "TODO Company", "note": "TODO: One line on scope and impact." }
+]

@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+const items = await getCollection('testimonials');
+---
+<div class="grid gap-5 md:grid-cols-3">
+  {items.map(({ data }) => (
+    <figure class="reveal card flex flex-col p-7">
+      <svg class="h-6 w-6 text-accent/70" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.5 6C6.5 7.2 4.5 10 4.5 13.5V18h6v-6H7.6c.2-1.9 1.3-3.4 3-4.2L9.5 6zm10 0c-3 1.2-5 4-5 7.5V18h6v-6h-2.9c.2-1.9 1.3-3.4 3-4.2L19.5 6z"/></svg>
+      <blockquote class="mt-5 flex-1 leading-relaxed text-ink/90">{data.quote}</blockquote>
+      <figcaption class="mt-6 border-t border-line pt-4 text-sm">
+        <span class="font-medium">{data.name}</span>
+        <span class="block text-subtle">{data.title}</span>
+      </figcaption>
+    </figure>
+  ))}
+</div>

@@ -1,0 +1,19 @@
+---
+import { site } from '../site.config';
+import Arrow from './Arrow.astro';
+interface Props { title?: string; text?: string }
+const { title = 'Have a project in mind?', text = 'A 30-minute call is usually enough to tell whether I can help — and if not, who can.' } = Astro.props;
+---
+<section class="container-x pb-24 sm:pb-32">
+  <div class="reveal relative overflow-hidden rounded-3xl border border-line bg-surface px-7 py-14 sm:px-14 sm:py-20">
+    <div class="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/20 blur-3xl"></div>
+    <div class="relative max-w-2xl">
+      <h2 class="h-section">{title}</h2>
+      <p class="lead mt-4">{text}</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href={site.bookingUrl} class="btn-primary group">Book a call <Arrow /></a>
+        <a href={`mailto:${site.email}`} class="btn-ghost">{site.email}</a>
+      </div>
+    </div>
+  </div>
+</section>

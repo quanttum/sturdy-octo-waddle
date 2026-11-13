@@ -1,0 +1,67 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import CaseStudyCard from '../../components/CaseStudyCard.astro';
+import CTA from '../../components/CTA.astro';
+import Arrow from '../../components/Arrow.astro';
+import { site } from '../../site.config';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((s) => ({ params: { slug: s.id }, props: { service: s } }));
+}
+const { service } = Astro.props;
+const { Content } = await render(service);
+const d = service.data;
+const related = await getCollection('caseStudies', (c) => c.data.service === service.id);
+const others = (await getCollection('services')).filter((s) => s.id !== service.id).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title={d.title} description={d.summary}>
+  <section class="container-x pt-16 pb-12 sm:pt-24">
+    <a href="/services" class="text-sm text-muted hover:text-ink">← All services</a>
+    <p class="eyebrow mt-10">Service</p>
+    <h1 class="h-display mt-3">{d.title}</h1>
+    <p class="lead mt-6 max-w-3xl">{d.summary}</p>
+    <a href={site.bookingUrl} class="btn-primary group mt-9">Discuss your project <Arrow /></a>
+  </section>
+
+  <section class="container-x grid gap-5 pb-8 md:grid-cols-3">
+    <div class="reveal card p-7">
+      <h2 class="eyebrow">Who it's for</h2>
+      <p class="mt-4 leading-relaxed text-ink/90">{d.forWho}</p>
+    </div>
+    <div class="reveal card p-7">
+      <h2 class="eyebrow">What you get</h2>
+      <ul class="mt-4 space-y-2.5 text-ink/90">
+        {d.deliverables.map((x) => <li class="flex gap-2.5"><span class="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-accent"></span>{x}</li>)}
+      </ul>
+    </div>
+    <div class="reveal card p-7">
+      <h2 class="eyebrow">Outcomes</h2>
+      <ul class="mt-4 space-y-2.5 text-ink/90">
+        {d.outcomes.map((x) => <li class="flex gap-2.5"><svg class="mt-1 h-4 w-4 shrink-0 text-accent" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8.5l3 3 7-7"/></svg>{x}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <div class="container-x py-12"><article class="prose-site max-w-3xl [&>h2:first-child]:mt-0"><Content /></article></div>
+
+  {related.length > 0 && (
+    <section class="container-x py-12">
+      <h2 class="h-section mb-8">Related work</h2>
+      <div class="space-y-5">{related.map((c) => <CaseStudyCard href={`/work/${c.id}`} {...c.data} />)}</div>
+    </section>
+  )}
+
+  <section class="container-x py-12">
+    <p class="eyebrow mb-5">Other services</p>
+    <div class="grid gap-5 sm:grid-cols-2">
+      {others.map((s) => (
+        <a href={`/services/${s.id}`} class="card card-hover group flex items-center justify-between p-6">
+          <span class="text-lg font-semibold">{s.data.title}</span><Arrow class="text-accent" />
+        </a>
+      ))}
+    </div>
+  </section>
+  <CTA />
+</Base>

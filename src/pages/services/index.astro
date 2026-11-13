@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import CTA from '../../components/CTA.astro';
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Services" description="Consulting, fintech and implementation services.">
+  <Section eyebrow="Services" title="Senior help for the hard parts of finance" intro="Fixed-scope engagements or ongoing support. You work directly with me, start to finish.">
+    <div class="grid gap-5 md:grid-cols-3">
+      {services.map((s, i) => (
+        <ServiceCard index={i + 1} title={s.data.title} summary={s.data.summary} href={`/services/${s.id}`} points={s.data.deliverables} />
+      ))}
+    </div>
+  </Section>
+  <Section eyebrow="Engagement" title="How we'd work together" class="!pt-0">
+    <ol class="grid gap-5 md:grid-cols-3">
+      {[
+        ['Intro call', '30 minutes. You describe the problem; I tell you honestly whether I am the right fit.'],
+        ['Proposal', 'Within a few days: scope, approach, timeline and a fixed or capped fee.'],
+        ['Work', 'Weekly check-ins, written updates and no surprises. You own everything we produce.'],
+      ].map(([t, d], i) => (
+        <li class="reveal card p-7">
+          <span class="grid h-8 w-8 place-items-center rounded-full border border-accent/40 text-sm text-accent">{i + 1}</span>
+          <h3 class="mt-5 text-lg font-semibold">{t}</h3>
+          <p class="mt-2 text-muted leading-relaxed">{d}</p>
+        </li>
+      ))}
+    </ol>
+  </Section>
+  <CTA />
+</Base>
