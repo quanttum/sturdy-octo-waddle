@@ -1,0 +1,23 @@
+---
+import { site, nav } from '../site.config';
+---
+<footer class="border-t border-line">
+  <div class="container-x flex flex-col gap-8 py-12 sm:flex-row sm:items-start sm:justify-between">
+    <div>
+      <p class="font-semibold">{site.name}</p>
+      <p class="mt-1 text-sm text-muted">{site.role}</p>
+      <p class="mt-1 text-sm text-subtle">{site.location}</p>
+    </div>
+    <div class="flex gap-12 text-sm">
+      <ul class="space-y-2">
+        {nav.map((l) => <li><a href={l.href} class="text-muted hover:text-ink">{l.label}</a></li>)}
+      </ul>
+      <ul class="space-y-2">
+        <li><a href={site.bookingPath} class="text-muted hover:text-ink">Book a call</a></li>
+        <li><a href={`mailto:${site.email}`} class="text-muted hover:text-ink">Email</a></li>
+        <li><a href={site.linkedin} class="text-muted hover:text-ink" rel="me noopener">LinkedIn</a></li>
+              </ul>
+    </div>
+  </div>
+  <div class="container-x pb-10 text-xs text-subtle">© {new Date().getFullYear()} {site.name}. All rights reserved.</div>
+</footer>

@@ -1,0 +1,52 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --color-bg: #0b0d10;
+  --color-surface: #12161b;
+  --color-surface-2: #181d23;
+  --color-line: #232a32;
+  --color-ink: #eef2f5;
+  --color-muted: #9aa5b1;
+  --color-subtle: #6b7682;
+  --color-accent: #2dd4bf;
+  --color-accent-strong: #14b8a6;
+}
+
+@layer base {
+  html { background: var(--color-bg); color: var(--color-ink); scroll-behavior: smooth; }
+  body { @apply font-sans antialiased; font-feature-settings: 'cv11', 'ss01'; }
+  ::selection { background: color-mix(in oklab, var(--color-accent) 35%, transparent); }
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: 4px; }
+}
+
+@utility container-x { @apply mx-auto w-full max-w-6xl px-5 sm:px-8; }
+@utility eyebrow { @apply text-xs font-medium uppercase tracking-[0.18em] text-accent; }
+@utility h-display { @apply text-4xl font-semibold tracking-tight text-balance sm:text-6xl lg:text-7xl; line-height: 1.02; }
+@utility h-section { @apply text-3xl font-semibold tracking-tight text-balance sm:text-4xl; }
+@utility lead { @apply text-lg leading-relaxed text-muted text-pretty sm:text-xl; }
+@utility card { @apply rounded-2xl border border-line bg-surface/60 transition-colors duration-300; }
+@utility card-hover { @apply hover:border-accent/40 hover:bg-surface; }
+@utility btn { @apply inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200; }
+@utility btn-primary { @apply btn bg-accent text-bg hover:bg-ink; }
+@utility btn-ghost { @apply btn border border-line text-ink hover:border-muted; }
+
+@layer components {
+  .prose-site { @apply text-muted leading-relaxed; }
+  .prose-site h2 { @apply mt-12 mb-4 text-2xl font-semibold tracking-tight text-ink; }
+  .prose-site h3 { @apply mt-8 mb-3 text-lg font-semibold text-ink; }
+  .prose-site p { @apply my-4; }
+  .prose-site ul { @apply my-4 space-y-2 pl-5 list-disc marker:text-accent; }
+  .prose-site strong { @apply text-ink font-semibold; }
+  .prose-site a { @apply text-accent underline underline-offset-4; }
+}
+
+/* Scroll reveal — progressive enhancement */
+.reveal { opacity: 1; }
+.js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
+.js .reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}

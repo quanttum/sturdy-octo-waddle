@@ -1,0 +1,45 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+
+export async function getStaticPaths() {
+  const cases = await getCollection('caseStudies');
+  return cases.map((c) => ({ params: { slug: c.id }, props: { cs: c } }));
+}
+const { cs } = Astro.props;
+const { Content } = await render(cs);
+const d = cs.data;
+const serviceName = { consulting: 'Consulting', fintech: 'Fintech', implementation: 'Implementation' }[d.service];
+---
+<Base title={d.title} description={d.summary}>
+  <section class="container-x pt-16 pb-10 sm:pt-24">
+    <a href="/work" class="text-sm text-muted hover:text-ink">← All work</a>
+    <p class="mt-10 text-sm text-subtle"><span class="text-accent">{d.sector}</span> · {d.client}{d.year && ` · ${d.year}`}</p>
+    <h1 class="h-display mt-4 max-w-4xl !text-4xl sm:!text-6xl">{d.title}</h1>
+    <p class="lead mt-6 max-w-3xl">{d.summary}</p>
+  </section>
+  <section class="container-x">
+    <dl class="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-[repeat(auto-fit,minmax(0,1fr))]">
+      {d.metrics.map((m) => (
+        <div class="bg-surface p-7">
+          <dd class="text-4xl font-semibold tracking-tight text-accent">{m.value}</dd>
+          <dt class="mt-2 text-sm text-muted">{m.label}</dt>
+        </div>
+      ))}
+    </dl>
+  </section>
+  <div class="container-x grid gap-10 py-14 lg:grid-cols-[1fr_16rem]">
+    <article class="prose-site max-w-3xl [&>h2:first-child]:mt-0"><Content /></article>
+    <aside class="space-y-5 text-sm lg:sticky lg:top-24 lg:self-start">
+      <div class="card p-5">
+        <p class="text-subtle">Service</p>
+        <a href={`/services/${d.service}`} class="mt-1 block font-medium text-accent hover:underline">{serviceName}</a>
+        <p class="mt-4 text-subtle">Sector</p><p class="mt-1 font-medium">{d.sector}</p>
+        {d.year && <><p class="mt-4 text-subtle">Year</p><p class="mt-1 font-medium">{d.year}</p></>}
+        <p class="mt-4 text-subtle">Client</p><p class="mt-1 font-medium">{d.client}</p>
+      </div>
+    </aside>
+  </div>
+  <CTA title="Facing something similar?" />
+</Base>

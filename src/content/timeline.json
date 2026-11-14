@@ -1,0 +1,8 @@
+[
+  { "id": "tipalti", "order": 1, "period": "Tipalti", "role": "Product & partnerships; previously delivery manager", "org": "Global AP automation platform",
+    "note": "Lead the embedded payments practice across partners, built the systems-integrator certification program, delivered ERP integrations, and took an AI agent into production for 600+ colleagues." },
+  { "id": "inovatec", "order": 2, "period": "Inovatec", "role": "Pre-sales & implementation lead", "org": "Lending software",
+    "note": "Delivered an enterprise lending platform for a major Canadian bank in nine months, built an embedded lending marketplace with eight lenders, and launched financing programs for major consumer and equipment brands." },
+  { "id": "capgemini", "order": 3, "period": "Capgemini", "role": "Enterprise systems consultant", "org": "SAP & ERP programmes",
+    "note": "SAP finance integrations at Air Liquide, one of the first e-invoicing rollouts in its region at Unilever, and an order-to-cash ERP programme for Stellantis across EMEA and Asia-Pacific." }
+]

@@ -1,0 +1,14 @@
+[
+  { "id": "bank", "order": 1, "client": "Major Canadian bank", "type": "LOS & dealer-facing portal",
+    "points": ["Full integration with the Inovatec LOS and core banking systems", "Payout quotes, deficiency and document management", "Full visibility for dealer partners; brandable for OEMs", "Support for subvention and other promotions"] },
+  { "id": "oem", "order": 2, "client": "Global motorcycle & musical-instrument OEM", "type": "End-to-end financing solution",
+    "points": ["Dealer and customer portals on LOS & LMS", "Full integration with the OEM website and SAP", "Leads and full applications, handed off seamlessly to dealers", "Any asset type, from motorcycles to instruments"] },
+  { "id": "marketplace", "order": 3, "client": "National online auto marketplace", "type": "Customer finance portal",
+    "points": ["Fully integrated into the marketplace website", "Leads and full applications", "Multi-lender best match for lender and customer", "Full life cycle, from application to delivery"] },
+  { "id": "credit-union", "order": 4, "client": "Canadian credit union", "type": "End-to-end auto finance",
+    "points": ["Integrated with the credit union's website", "Leads and full applications", "Subprime flow-through via a partner platform", "Consumer and commercial; loans and leases"] },
+  { "id": "home-services", "order": 5, "client": "Home-services financing provider", "type": "Dealer portal & LOS",
+    "points": ["4,000+ active dealers and POS locations", "Instant approvals and document generation", "DocuSign e-signatures; loans and leases", "Co-branding with large corporate partners"] },
+  { "id": "auctioneer", "order": 6, "client": "Global equipment auctioneer", "type": "Multi-lender portal",
+    "points": ["40+ lenders worldwide", "Pre- and post-auction approvals", "Document generation, e-signatures and funding", "Integrated with corporate ERP and CRM"] }
+]

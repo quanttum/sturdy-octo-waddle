@@ -1,0 +1,24 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Section from '../../components/Section.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import Packages from '../../components/Packages.astro';
+import HowIWork from '../../components/HowIWork.astro';
+import CTA from '../../components/CTA.astro';
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Services" description="Consulting, fintech and implementation services for finance-software and payments companies.">
+  <Section eyebrow="Services" title="Senior help for the hard parts of finance software" intro="Partner channels, ERP and embedded integrations, enterprise delivery and AI agents. You work directly with me, start to finish.">
+    <div class="grid gap-5 md:grid-cols-3">
+      {services.map((s, i) => (
+        <ServiceCard index={i + 1} title={s.data.title} summary={s.data.summary} href={`/services/${s.id}`} points={s.data.deliverables} />
+      ))}
+    </div>
+  </Section>
+  <Section id="packages" eyebrow="Packages" title="Fixed scope, fixed timeline" intro="Each package has a set scope, timeline and price, so you can decide without a long proposal." class="!pt-0">
+    <Packages />
+  </Section>
+  <Section eyebrow="Process" title="How I work" class="!pt-0"><HowIWork /></Section>
+  <CTA />
+</Base>

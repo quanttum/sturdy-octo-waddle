@@ -1,0 +1,318 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../site.config';
+import { meeting, rules } from '../booking.config';
+---
+<Base title="Book a call" description={`Book a ${rules.durationMin}-minute intro call with ${site.name}.`}>
+  <section class="container-x py-12 sm:py-16">
+    <div id="booker" data-duration={rules.durationMin} data-title={meeting.title} data-host={site.name} data-email={site.email}
+         class="overflow-hidden rounded-3xl border border-line bg-surface/60 lg:grid lg:min-h-[36rem] lg:grid-cols-[19rem_1fr]">
+
+      <!-- Host / meeting details -->
+      <aside class="border-b border-line p-7 lg:border-b-0 lg:border-r">
+        <div class="flex items-center gap-3">
+          {site.photo && <img src={site.photo} alt="" width="48" height="48" class="h-12 w-12 rounded-full object-cover" />}
+          <div>
+            <p class="text-sm text-muted">{site.name}</p>
+            <h1 class="text-xl font-semibold tracking-tight">{meeting.title}</h1>
+          </div>
+        </div>
+        <ul class="mt-6 space-y-3 text-sm text-muted">
+          <li class="flex items-center gap-3">
+            <svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            {rules.durationMin} minutes
+          </li>
+          <li class="flex items-center gap-3">
+            <svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg>
+            {meeting.location}, link sent with the invite
+          </li>
+          <li id="summary" hidden class="flex items-start gap-3 text-ink">
+            <svg class="mt-0.5 h-4 w-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+            <span id="summary-text"></span>
+          </li>
+        </ul>
+        <p class="mt-6 text-sm leading-relaxed text-muted">{meeting.description}</p>
+        <p id="demo-note" hidden class="mt-6 rounded-xl border border-amber-400/30 bg-amber-400/10 p-3 text-xs leading-relaxed text-amber-200">
+          Demo mode: times are sample data and no calendar invite is sent. Connect Google Calendar to go live (see README).
+        </p>
+      </aside>
+
+      <div class="relative p-6 sm:p-8">
+        <!-- Step 1: pick a day and time -->
+        <div id="view-pick">
+          <h2 class="text-lg font-semibold">Select a date and time</h2>
+          <p id="pick-error" role="alert" class="mt-3 hidden rounded-xl border border-red-400/30 bg-red-400/10 p-3 text-sm text-red-200"></p>
+          <div class="mt-6 grid gap-8 md:grid-cols-[1fr_12rem]">
+            <div>
+              <div class="flex items-center justify-between">
+                <button id="prev" type="button" class="grid h-9 w-9 place-items-center rounded-full text-muted hover:bg-surface-2 hover:text-ink disabled:pointer-events-none disabled:opacity-30" aria-label="Previous month">
+                  <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 3L5 8l5 5"/></svg>
+                </button>
+                <p id="month" class="font-medium" aria-live="polite"></p>
+                <button id="next" type="button" class="grid h-9 w-9 place-items-center rounded-full text-muted hover:bg-surface-2 hover:text-ink disabled:pointer-events-none disabled:opacity-30" aria-label="Next month">
+                  <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3l5 5-5 5"/></svg>
+                </button>
+              </div>
+              <div class="mt-4 grid grid-cols-7 text-center text-[11px] font-medium uppercase tracking-wider text-subtle" aria-hidden="true">
+                <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+              </div>
+              <div id="grid" role="grid" aria-label="Available dates" class="mt-2 grid grid-cols-7 gap-1"></div>
+              <div id="loading" class="mt-6 text-sm text-subtle" aria-live="polite">Loading availability…</div>
+              <label class="mt-6 block text-xs text-subtle">
+                Time zone
+                <select id="tz" class="mt-1.5 block w-full rounded-lg border border-line bg-bg px-3 py-2 text-sm text-ink"></select>
+              </label>
+            </div>
+            <div>
+              <p id="day-label" class="text-sm font-medium text-muted">&nbsp;</p>
+              <div id="times" class="mt-3 grid max-h-[24rem] grid-cols-2 gap-2 overflow-y-auto pr-1 md:grid-cols-1" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: details -->
+        <form id="view-form" hidden novalidate class="max-w-lg">
+          <button type="button" id="back" class="mb-5 inline-flex items-center gap-1.5 text-sm text-muted hover:text-ink">
+            <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 3L5 8l5 5"/></svg> Back
+          </button>
+          <h2 class="text-lg font-semibold">Your details</h2>
+          <p class="mt-1 text-sm text-muted">Tell me what you are trying to launch or fix, and by when.</p>
+          <p id="form-error" role="alert" class="mt-4 hidden rounded-xl border border-red-400/30 bg-red-400/10 p-3 text-sm text-red-200"></p>
+          <div class="mt-6 space-y-4">
+            <label class="block text-sm">Name <span class="text-accent">*</span>
+              <input name="name" autocomplete="name" required class="field" />
+              <span data-err="name" class="err"></span>
+            </label>
+            <label class="block text-sm">Email <span class="text-accent">*</span>
+              <input name="email" type="email" autocomplete="email" required class="field" />
+              <span data-err="email" class="err"></span>
+            </label>
+            <label class="block text-sm">Company
+              <input name="company" autocomplete="organization" class="field" />
+            </label>
+            <label class="block text-sm">What are you working on? <span class="text-accent">*</span>
+              <textarea name="topic" rows="4" required class="field resize-y"></textarea>
+              <span data-err="topic" class="err"></span>
+            </label>
+            <label class="block text-sm">Timeline
+              <input name="timeline" placeholder="e.g. launch by Q2" class="field" />
+            </label>
+            <label class="hidden" aria-hidden="true">Website <input name="website" tabindex="-1" autocomplete="off" /></label>
+          </div>
+          <button id="submit" type="submit" class="btn-primary mt-7">Schedule call</button>
+        </form>
+
+        <!-- Step 3: confirmation -->
+        <div id="view-done" hidden class="max-w-lg py-4">
+          <span class="grid h-12 w-12 place-items-center rounded-full bg-accent/15 text-accent">
+            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          </span>
+          <h2 class="mt-5 text-2xl font-semibold tracking-tight">You're booked</h2>
+          <p id="done-when" class="mt-3 text-lg text-ink"></p>
+          <p id="done-note" class="mt-3 leading-relaxed text-muted"></p>
+          <div class="mt-7 flex flex-wrap gap-3">
+            <a id="done-meet" hidden class="btn-primary" target="_blank" rel="noopener">Open Google Meet link</a>
+            <button id="done-ics" type="button" class="btn-ghost">Add to calendar (.ics)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="mt-6 text-center text-sm text-subtle">Prefer email? <a href={`mailto:${site.email}`} class="text-accent hover:underline">{site.email}</a></p>
+  </section>
+</Base>
+
+<style>
+  @reference "../styles/global.css";
+  .field { @apply mt-1.5 block w-full rounded-lg border border-line bg-bg px-3 py-2.5 text-ink placeholder:text-subtle focus:border-accent/60 focus:outline-none; }
+  .err { @apply mt-1 block text-xs text-red-300; }
+</style>
+
+<script>
+  type Slot = string; // ISO UTC
+  const root = document.getElementById('booker')!;
+  const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
+  const duration = Number(root.dataset.duration);
+  const title = `${root.dataset.title} with ${root.dataset.host}`;
+
+  let slots: Slot[] = [];
+  let byDay = new Map<string, Slot[]>();
+  let tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+  let view = { y: 0, m: 0 }; // month being shown (m: 0-11)
+  let selectedDay = '';
+  let selectedSlot = '';
+
+  // ----- formatting helpers (all in the visitor's chosen time zone) -----
+  const keyOf = (iso: string) => new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(iso));
+  const timeOf = (iso: string) => new Intl.DateTimeFormat(undefined, { timeZone: tz, hour: 'numeric', minute: '2-digit' }).format(new Date(iso));
+  const longDate = (key: string) => new Intl.DateTimeFormat(undefined, { timeZone: 'UTC', weekday: 'long', month: 'long', day: 'numeric' }).format(new Date(key + 'T12:00:00Z'));
+  const whenText = (iso: string) => {
+    const end = new Date(Date.parse(iso) + duration * 60_000).toISOString();
+    return `${timeOf(iso)} – ${timeOf(end)}, ${longDate(keyOf(iso))} (${tz.replace(/_/g, ' ')})`;
+  };
+  const pad = (n: number) => String(n).padStart(2, '0');
+  const ymd = (y: number, m: number, d: number) => `${y}-${pad(m + 1)}-${pad(d)}`;
+
+  // ----- time zone picker -----
+  const tzSelect = $<HTMLSelectElement>('tz');
+  const zones: string[] = (Intl as unknown as { supportedValuesOf?: (k: string) => string[] }).supportedValuesOf?.('timeZone') ?? [];
+  if (!zones.includes(tz)) zones.unshift(tz);
+  tzSelect.innerHTML = zones.map((z) => `<option value="${z}">${z.replace(/_/g, ' ')}</option>`).join('');
+  tzSelect.value = tz;
+  tzSelect.addEventListener('change', () => { tz = tzSelect.value; group(); selectedDay = byDay.has(selectedDay) ? selectedDay : firstDay(); renderAll(); });
+
+  function group() {
+    byDay = new Map();
+    for (const s of slots) { const k = keyOf(s); byDay.set(k, [...(byDay.get(k) ?? []), s]); }
+  }
+  const firstDay = () => [...byDay.keys()].sort()[0] ?? '';
+
+  // ----- calendar -----
+  const grid = $('grid');
+  function renderCalendar() {
+    const { y, m } = view;
+    $('month').textContent = new Intl.DateTimeFormat(undefined, { timeZone: 'UTC', month: 'long', year: 'numeric' }).format(new Date(Date.UTC(y, m, 15)));
+    const lead = (new Date(Date.UTC(y, m, 1)).getUTCDay() + 6) % 7; // Monday-first
+    const days = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+    const today = keyOf(new Date().toISOString());
+    const focusKey = byDay.has(selectedDay) && selectedDay.startsWith(ymd(y, m, 1).slice(0, 7)) ? selectedDay
+      : [...byDay.keys()].sort().find((k) => k.startsWith(ymd(y, m, 1).slice(0, 7)));
+    let html = '<div role="row" class="contents">' + '<span></span>'.repeat(lead);
+    for (let d = 1; d <= days; d++) {
+      const k = ymd(y, m, d);
+      const open = byDay.has(k);
+      const sel = k === selectedDay;
+      const cls = sel ? 'bg-accent text-bg font-semibold'
+        : open ? 'bg-accent/10 text-accent font-medium hover:bg-accent/20'
+        : 'text-subtle/60 cursor-default';
+      html += `<button type="button" role="gridcell" data-day="${k}" aria-label="${longDate(k)}${open ? ', times available' : ', unavailable'}"
+        ${open ? '' : 'aria-disabled="true"'} aria-selected="${sel}" tabindex="${k === focusKey ? 0 : -1}"
+        class="relative mx-auto grid aspect-square w-full max-w-11 place-items-center rounded-full text-sm transition-colors ${cls}">${d}${k === today ? '<span class="absolute bottom-1 h-1 w-1 rounded-full bg-current"></span>' : ''}</button>`;
+    }
+    grid.innerHTML = html + '</div>';
+    const months = [...byDay.keys()].map((k) => k.slice(0, 7)).sort();
+    const cur = ymd(y, m, 1).slice(0, 7);
+    $<HTMLButtonElement>('prev').disabled = cur <= today.slice(0, 7);
+    $<HTMLButtonElement>('next').disabled = !months.length || cur >= months[months.length - 1];
+  }
+
+  grid.addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-day]');
+    if (!b || b.getAttribute('aria-disabled')) return;
+    selectedDay = b.dataset.day!;
+    renderAll();
+    grid.querySelector<HTMLButtonElement>(`[data-day="${selectedDay}"]`)?.focus();
+  });
+  grid.addEventListener('keydown', (e) => {
+    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-day]');
+    const step = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 }[e.key];
+    if (!b || !step) return;
+    e.preventDefault();
+    const [yy, mm, dd] = b.dataset.day!.split('-').map(Number);
+    const t = new Date(Date.UTC(yy, mm - 1, dd + step));
+    const k = ymd(t.getUTCFullYear(), t.getUTCMonth(), t.getUTCDate());
+    if (t.getUTCMonth() !== view.m) { view = { y: t.getUTCFullYear(), m: t.getUTCMonth() }; renderCalendar(); }
+    const target = grid.querySelector<HTMLButtonElement>(`[data-day="${k}"]`);
+    grid.querySelectorAll('button').forEach((x) => (x.tabIndex = -1));
+    if (target) { target.tabIndex = 0; target.focus(); }
+  });
+  $('prev').addEventListener('click', () => { view = view.m === 0 ? { y: view.y - 1, m: 11 } : { y: view.y, m: view.m - 1 }; renderCalendar(); });
+  $('next').addEventListener('click', () => { view = view.m === 11 ? { y: view.y + 1, m: 0 } : { y: view.y, m: view.m + 1 }; renderCalendar(); });
+
+  // ----- times -----
+  function renderTimes() {
+    const list = byDay.get(selectedDay) ?? [];
+    $('day-label').textContent = selectedDay ? longDate(selectedDay) : slots.length ? 'Pick a date' : '';
+    $('times').innerHTML = list.map((s) =>
+      `<button type="button" data-slot="${s}" class="rounded-lg border border-accent/40 px-3 py-2.5 text-sm font-medium text-accent transition-colors hover:border-accent hover:bg-accent hover:text-bg">${timeOf(s)}</button>`).join('');
+  }
+  $('times').addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-slot]');
+    if (!b) return;
+    selectedSlot = b.dataset.slot!;
+    show('form');
+  });
+
+  function renderAll() {
+    if (selectedDay) { const [y, m] = selectedDay.split('-').map(Number); view = { y, m: m - 1 }; }
+    renderCalendar();
+    renderTimes();
+  }
+
+  // ----- steps -----
+  function show(step: 'pick' | 'form' | 'done') {
+    $('view-pick').hidden = step !== 'pick';
+    $('view-form').hidden = step !== 'form';
+    $('view-done').hidden = step !== 'done';
+    $('summary').hidden = step === 'pick';
+    if (step !== 'pick') $('summary-text').textContent = whenText(selectedSlot);
+    if (step === 'form') (document.querySelector('#view-form input[name=name]') as HTMLInputElement).focus();
+  }
+  $('back').addEventListener('click', () => show('pick'));
+
+  async function load() {
+    $('loading').textContent = 'Loading availability…';
+    try {
+      const res = await fetch('/api/availability');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      slots = data.slots;
+      $('demo-note').hidden = !data.demo;
+      group();
+      selectedDay = firstDay();
+      if (!selectedDay) { const n = new Date(); view = { y: n.getFullYear(), m: n.getMonth() }; }
+      $('loading').textContent = slots.length ? '' : 'No open times in the next few weeks. Please email me instead.';
+      renderAll();
+    } catch {
+      $('loading').textContent = 'Could not load availability. Please refresh, or email me instead.';
+    }
+  }
+
+  // ----- submit -----
+  const form = $<HTMLFormElement>('view-form');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const payload = { ...Object.fromEntries(fd), start: selectedSlot, timezone: tz };
+    form.querySelectorAll<HTMLElement>('[data-err]').forEach((el) => (el.textContent = ''));
+    $('form-error').classList.add('hidden');
+    const btn = $<HTMLButtonElement>('submit');
+    btn.disabled = true; btn.textContent = 'Scheduling…';
+    try {
+      const res = await fetch('/api/book', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
+      const data = await res.json();
+      if (res.status === 409) {
+        $('pick-error').textContent = data.error; $('pick-error').classList.remove('hidden');
+        show('pick'); await load(); return;
+      }
+      if (!res.ok) {
+        for (const [k, v] of Object.entries<string>(data.fields ?? {})) { const el = form.querySelector(`[data-err="${k}"]`); if (el) el.textContent = v; }
+        $('form-error').textContent = data.error; $('form-error').classList.remove('hidden');
+        return;
+      }
+      $('done-when').textContent = whenText(data.start);
+      $('done-note').textContent = data.demo
+        ? 'Demo mode: nothing was added to a real calendar.'
+        : `A calendar invite with the Google Meet link is on its way to ${fd.get('email')}.`;
+      const meet = $<HTMLAnchorElement>('done-meet');
+      if (data.meetLink) { meet.href = data.meetLink; meet.hidden = false; }
+      $('done-ics').onclick = () => downloadIcs(data.start, data.end, data.meetLink);
+      show('done');
+    } catch {
+      $('form-error').textContent = 'Network error. Please try again.'; $('form-error').classList.remove('hidden');
+    } finally {
+      btn.disabled = false; btn.textContent = 'Schedule call';
+    }
+  });
+
+  function downloadIcs(start: string, end: string, meet: string | null) {
+    const f = (iso: string) => iso.replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//booking//EN', 'BEGIN:VEVENT',
+      `UID:${crypto.randomUUID()}`, `DTSTAMP:${f(new Date().toISOString())}`, `DTSTART:${f(start)}`, `DTEND:${f(end)}`,
+      `SUMMARY:${title}`, `LOCATION:${meet ?? 'Google Meet'}`, `ORGANIZER:mailto:${root.dataset.email}`, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })), download: 'intro-call.ics' });
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  load();
+</script>
